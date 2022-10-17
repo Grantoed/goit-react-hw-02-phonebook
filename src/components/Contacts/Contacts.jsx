@@ -3,6 +3,7 @@ import {
   ContactsItem,
   FilterLabel,
   FilterInput,
+  DeleteBtn,
 } from './Contacts.styled';
 import { nanoid } from 'nanoid';
 
@@ -10,9 +11,8 @@ export const Contacts = ({
   contacts,
   filterValue,
   handleChange,
-  handleFilter,
+  handleDelete,
 }) => {
-  const filteredContacts = handleFilter();
   return (
     <>
       <FilterLabel htmlFor="filter">Find contacts by name</FilterLabel>
@@ -23,19 +23,21 @@ export const Contacts = ({
         value={filterValue}
         onChange={handleChange}
       />
-      {filterValue ? (
-        <ContactsList>
-          {filteredContacts.map(contactItem => {
-            return <ContactsItem key={nanoid(4)}>{contactItem}</ContactsItem>;
-          })}
-        </ContactsList>
-      ) : (
-        <ContactsList>
-          {contacts.map(contactItem => {
-            return <ContactsItem key={nanoid(4)}>{contactItem}</ContactsItem>;
-          })}
-        </ContactsList>
-      )}
+      <ContactsList>
+        {contacts.map(contactItem => {
+          return (
+            <ContactsItem key={nanoid(4)}>
+              {contactItem.name}: {contactItem.number}
+              <DeleteBtn
+                type="button"
+                onClick={() => handleDelete(contactItem.id)}
+              >
+                Delete
+              </DeleteBtn>
+            </ContactsItem>
+          );
+        })}
+      </ContactsList>
     </>
   );
 };

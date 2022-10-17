@@ -14,3 +14,5 @@ export const FilterLabel = styled.label`
 export const FilterInput = styled.input`
   width: 350px;
 `;
+
+export const DeleteBtn = styled.button``;
