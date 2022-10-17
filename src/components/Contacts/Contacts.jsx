@@ -6,7 +6,13 @@ import {
 } from './Contacts.styled';
 import { nanoid } from 'nanoid';
 
-export const Contacts = ({ contacts, handleChange }) => {
+export const Contacts = ({
+  contacts,
+  filterValue,
+  handleChange,
+  handleFilter,
+}) => {
+  const filteredContacts = handleFilter();
   return (
     <>
       <FilterLabel htmlFor="filter">Find contacts by name</FilterLabel>
@@ -14,13 +20,22 @@ export const Contacts = ({ contacts, handleChange }) => {
         type="text"
         id="filter"
         name="filter"
+        value={filterValue}
         onChange={handleChange}
       />
-      <ContactsList>
-        {contacts.map(contactItem => {
-          return <ContactsItem key={nanoid(4)}>{contactItem}</ContactsItem>;
-        })}
-      </ContactsList>
+      {filterValue ? (
+        <ContactsList>
+          {filteredContacts.map(contactItem => {
+            return <ContactsItem key={nanoid(4)}>{contactItem}</ContactsItem>;
+          })}
+        </ContactsList>
+      ) : (
+        <ContactsList>
+          {contacts.map(contactItem => {
+            return <ContactsItem key={nanoid(4)}>{contactItem}</ContactsItem>;
+          })}
+        </ContactsList>
+      )}
     </>
   );
 };

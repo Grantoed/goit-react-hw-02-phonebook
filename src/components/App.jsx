@@ -21,6 +21,14 @@ export class App extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleFilter = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase().trim();
+    return contacts.filter(contact =>
+      contact.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const contact = `${this.state.name.trim()}: ${this.state.number.trim()}`;
@@ -43,8 +51,10 @@ export class App extends Component {
         </Section>
         <Section title="Contacts">
           <Contacts
-            contacts={this.state.contacts}
             handleChange={this.handleChange}
+            handleFilter={this.handleFilter}
+            contacts={this.state.contacts}
+            filterValue={this.state.filter}
           ></Contacts>
         </Section>
       </Box>
